@@ -1,5 +1,5 @@
 # competitive-programming
-Where a couple of friends and I practice for computing competitions.
+Where a couple of friends and I practice for computing competitions. Feel free to open up a pull request if you have solutions to contribute! Always remember to attempt the problem before you look at the solution. Don't copy-paste a solution: even typing it out is better! It'll help you build up the muscle memory.
 
 # Resources
 

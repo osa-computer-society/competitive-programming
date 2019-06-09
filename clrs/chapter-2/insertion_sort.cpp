@@ -1,3 +1,9 @@
+/*
+ * This is an implementation of insertion sort in C++, based
+ * off the pseudocode on page 18 of CLRS.
+ * by Alexander Cai, 9 June 2019
+ */
+
 #include <iostream>
 #include <vector>
 using namespace std;

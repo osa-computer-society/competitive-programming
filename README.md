@@ -12,6 +12,7 @@ Where a couple of friends and I practice for computing competitions. Feel free t
   4. The program should run.
 - You can test this using the `hello_world.cpp` file.
 - P.S. an interesting way to learn the language is translating the existing code! Try translating some of my Kattis solutions to C++.
+- In the UVa directory, I've included sample test cases for some of the problems. To test them with your solution, type `cat [PROBLEMNAME].in | ./a.out` after compiling your code.
 
 ### Conventions
 - Use the standard namespace, i.e. put `using namespace std;` at the top of your C++ files.

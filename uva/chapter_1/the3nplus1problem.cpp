@@ -1,4 +1,4 @@
-// Problem ID on UVa: 100
+// Problem ID: 100
 // By Alexander Cai, 12-06-2019
 // Accepted
 

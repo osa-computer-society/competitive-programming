@@ -6,6 +6,7 @@
 #include <vector>
 using namespace std;
 
+// Arrays to store the relative coordinates of the surrounding squares
 const int drow[8] = {-1, -1, -1,  0, 0,  1, 1, 1};
 const int dcol[8] = {-1,  0,  1, -1, 1, -1, 0, 1};
 

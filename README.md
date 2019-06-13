@@ -38,6 +38,7 @@ Where a couple of friends and I practice for computing competitions. Feel free t
 - [Kattis](https://open.kattis.com/)
 - [University of Valladolid](https://uva.onlinejudge.org/)
   - You can check your answers using [uDebug](https://www.udebug.com/) by selecting UVa from the dropdown list and entering the problem ID
+  - From personal experience, make sure to read the output specifications carefully -- it'll save you a lot of time wondering why the judge isn't accepting your answer! Just an extra newline or space can cost you the solution.
   
 ## Misc.
 - Please feel free to contribute to this list!

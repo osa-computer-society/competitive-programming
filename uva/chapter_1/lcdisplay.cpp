@@ -1,5 +1,6 @@
 // Problem ID: 706
 // By Alexander Cai 12-06-2019
+// Accepted
 
 #include <iostream>
 #include <string>

@@ -36,3 +36,6 @@
 
 # Mac files
 .DS_Store
+
+# Testing
+*.test

@@ -1,5 +1,8 @@
 // Problem ID: 10315
 // By Alexander Cai 15-06-2019
+// ACCEPTED! Hoo boy this was a long one -- really it's just accounting
+// for all the different hand combinations and checking for tiebreakers
+// that poses the problem.
 
 #include <iostream>
 #include <algorithm>
@@ -61,7 +64,7 @@ bool test_condition(bool black, bool white, int higher) {
     } else if (higher == WHITE) {
       cout << "White wins." << endl;
     } else {
-      cout << "Ties." << endl;
+      cout << "Tie." << endl;
     }
   }
 
@@ -96,7 +99,7 @@ int main() {
         ss >> card_suit;
         int rank = rank_card(card_value, card_suit);
         hands[i].push_back(rank);
-        hand_values[i].push_back(value(rank));
+        hand_values[i].push_back(number_value(rank));
         hand_sets[i].insert(rank);
       }
     }
@@ -108,42 +111,51 @@ int main() {
     bool straight[] = {true, true};
     bool flush[] = {true, true};
 
-    sort(hands[WHITE].begin(), hands[WHITE].end());
     sort(hands[BLACK].begin(), hands[BLACK].end());
+    sort(hands[WHITE].begin(), hands[WHITE].end());
+    sort(hand_values[BLACK].begin(), hand_values[BLACK].end());
+    sort(hand_values[WHITE].begin(), hand_values[WHITE].end());
 
     // Straight flush
     for (int j = 1; j < 5; j++) {
       for (int i = 0; i <= 1; i++) {
-        if (hand_values[i][j] != hand_values[i][j-1]) // If the cards are not consecutive
+        if (hand_values[i][j] != hand_values[i][j-1] + 1) { // If the cards are not consecutive
           straight[i] = false; // There is no straight flush
-        if (suit(hands[i][j]) != suit(hands[i][j-1]))
+        } if (suit(hands[i][j]) != suit(hands[i][j-1]))
           flush[i] = false;
       }
     }
 
+    // cout << endl << s << endl;
+    // for (int i = 0; i <= 1; i++) {
+    //   for (auto val : hands[i])
+    //     cout << value(val) << suit(val) << " ";
+    //   cout << endl;
+    // }
+
     for (int i = 0; i <= 1; i++) {
       // For each unique value in the hand
       for (auto val : hand_sets[i]) {
-        int c = count(hand_values[i].begin(), hand_values[i].end(), value(val));
+        int c = count(hand_values[i].begin(), hand_values[i].end(), number_value(val));
         // If c is repeated more times, or if it is repeated the 
         // same number of times but the value is larger
         if (c > times_repeated[i]
         || (c == times_repeated[i] && number_value(val) > most_repeated_value[i])) {
-          // cout << val << " " << value(val) << suit(val) << " " << number_value(val) << endl;
           second_most_repeated[i] = most_repeated_value[i];
           second_most_times_repeated[i] = times_repeated[i];
           most_repeated_value[i] = number_value(val);
           times_repeated[i] = c;
+        } else if (c < times_repeated[i] && c > second_most_times_repeated[i]) {
+          second_most_repeated[i] = number_value(val);
+          second_most_times_repeated[i] = c;
         }
       }
     }
 
-    cout << endl << s << endl;
-    for (int i = 0; i <= 1; i++) {
-      for (auto val : hands[i])
-        cout << value(val) << suit(val) << " ";
-      cout << endl;
-    }
+    // cout << "most repeated black value: " << most_repeated_value[BLACK] << endl;
+    // cout << "2nd most repeated black value: " << second_most_repeated[BLACK] << endl;
+    // cout << "most repeated white value: " << most_repeated_value[WHITE] << endl;
+    // cout << "2nd most repeated white value: " << second_most_repeated[WHITE] << endl;
 
     int higher = -1;
     if (hand_values[BLACK][4] > hand_values[WHITE][4]) higher = BLACK;
@@ -151,66 +163,58 @@ int main() {
 
     // We go from highest priority downwards
     // Straight flush
+    // for (auto c : hand_values[WHITE]) cout << c << " ";
+    // cout << endl;
+    // cout << straight[BLACK] << ", " << straight[WHITE] << endl;
+    // cout << higher << endl;
     if (test_condition(straight[BLACK] && flush[BLACK], straight[WHITE] && flush[WHITE], higher)) continue;
-    cout << "tied straight flush" << endl;
+    // cout << "tied straight flush" << endl;
 
     // Four of a kind
     higher = -1;
     if (most_repeated_value[BLACK] > most_repeated_value[WHITE]) higher = BLACK;
     if (most_repeated_value[WHITE] > most_repeated_value[BLACK]) higher = WHITE;
     if (test_condition(times_repeated[BLACK] == 4, times_repeated[WHITE] == 4, higher)) continue;
-    cout << "tied four of a kind" << endl;
+    // cout << "tied four of a kind" << endl;
 
     // Full house; we don't recheck higher since it's the same as above
     if (test_condition(
       times_repeated[BLACK] == 3 && second_most_times_repeated[BLACK] == 2,
       times_repeated[WHITE] == 3 && second_most_times_repeated[WHITE] == 2, higher
     )) continue;
-    cout << "tied full house" << endl;
+    // cout << "tied full house" << endl;
 
     // Flush
     higher = high_card(hands);
     if (test_condition(flush[BLACK], flush[WHITE], higher)) continue;
-    cout << "tied flush" << endl;
+    // cout << "tied flush" << endl;
 
     // Straight
     higher = -1;
     if (hand_values[BLACK][4] > hand_values[WHITE][4]) higher = BLACK;
     if (hand_values[WHITE][4] > hand_values[BLACK][4]) higher = WHITE;
     if (test_condition(straight[BLACK], straight[WHITE], higher)) continue;
-    cout << "tied straight" << endl;
+    // cout << "tied straight" << endl;
 
     // Three of a kind
     higher = -1;
-    cout << "most repeated black value: " << most_repeated_value[BLACK] << endl;
-    cout << "2nd most repeated black value: " << second_most_repeated[BLACK] << endl;
-    cout << "most repeated white value: " << most_repeated_value[WHITE] << endl;
-    cout << "2nd most repeated white value: " << second_most_repeated[WHITE] << endl;
-
     if (most_repeated_value[BLACK] > most_repeated_value[WHITE]) higher = BLACK;
     if (most_repeated_value[WHITE] > most_repeated_value[BLACK]) higher = WHITE;
     if (test_condition(times_repeated[BLACK] == 3, times_repeated[WHITE] == 3, higher)) continue;
-    cout << "tied three of a kind" << endl;
+    // cout << "tied three of a kind" << endl;
 
     // Two pairs
-    cout << higher << endl;
     if (higher == -1) {
       if (second_most_repeated[BLACK] > second_most_repeated[WHITE]) higher = BLACK;
       if (second_most_repeated[WHITE] > second_most_repeated[BLACK]) higher = WHITE;
-      cout << higher << endl;
-
       if (higher == -1) {
         int extra[] = {0, 0};
         for (int i = 0; i <= 1; i++)
           for (auto j : hand_sets[i])
             if (number_value(j) != second_most_repeated[i] && j != most_repeated_value[i])
-              extra[i] = j;
-
-        cout << "extra black " << extra[BLACK] << ", extra white " << extra[WHITE] << endl;
-
+              extra[i] = number_value(j);
         if (extra[BLACK] > extra[WHITE]) higher = BLACK;
         if (extra[WHITE] > extra[BLACK]) higher = WHITE;
-        cout << higher << endl;
       }
     }
     if (test_condition(
@@ -218,15 +222,27 @@ int main() {
       times_repeated[WHITE] == 2 && second_most_times_repeated[WHITE] == 2,
       higher)
       ) continue;
-    cout << "tied two pairs" << endl;
+    // cout << "tied two pairs" << endl;
 
     // Pairs
+    higher = -1;
+    if (most_repeated_value[BLACK] > most_repeated_value[WHITE]) higher = BLACK;
+    else if (most_repeated_value[WHITE] > most_repeated_value[BLACK]) higher = WHITE;
+    else for (int i = 4; i >= 0; i--) {
+      if (hand_values[BLACK][i] > hand_values[WHITE][i]) {
+        higher = BLACK;
+        break;
+      } else if (hand_values[WHITE][i] > hand_values[BLACK][i]) {
+        higher = WHITE;
+        break;
+      }
+    }
     if (test_condition(
       times_repeated[BLACK] == 2,
       times_repeated[WHITE] == 2,
       higher)
     ) continue;
-    cout << "tied pairs" << endl;
+    // cout << "tied pairs" << endl;
 
     // High card
     higher = high_card(hands);
@@ -235,7 +251,7 @@ int main() {
     } else if (higher == WHITE) {
       cout << "White wins." << endl;
     } else {
-      cout << "Ties." << endl;
+      cout << "Tie." << endl;
     }
   }
 

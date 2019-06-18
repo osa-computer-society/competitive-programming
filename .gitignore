@@ -36,6 +36,7 @@
 
 # Mac files
 .DS_Store
+*.dSYM
 
 # Testing
 *.test

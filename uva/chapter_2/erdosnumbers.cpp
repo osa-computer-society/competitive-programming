@@ -13,16 +13,6 @@ using namespace std;
 
 const string delim = "., ";
 
-template<typename Collection>
-void log(string s, const Collection &c) {
-  #ifdef DEBUG
-  cout << s << ": [\n";
-  for (typename Collection::const_iterator it = c.begin(); it != c.end(); it++)
-    cout << "  " << *it << ",\n";
-  cout << ']' << endl;
-  #endif
-}
-
 void bfs(map<string,int> &erdos_ns, map<string,vector<string> > coauthors) {
   queue<string> Q;
   Q.push("Erdos, P.");
@@ -63,8 +53,6 @@ int main() {
 
       if (paper != "")
         authors.push_back(paper);
-
-      log("authors", authors);
       
       for (string s : authors)
         erdos_ns[s] = -1;
@@ -84,12 +72,12 @@ int main() {
     }
 
     bfs(erdos_ns, coauthors);
-    std::cout << "Scenario " << scen << endl;
+    cout << "Scenario " << scen << endl;
     for (string name : names_to_find) {
-      std::cout << name << ' ';
-      if (erdos_ns[name] == -1 || (coauthors.find(name) == coauthors.end())) std::cout << "infinity";
-      else std::cout << erdos_ns[name];
-      std::cout << endl;
+      cout << name << ' ';
+      if (erdos_ns[name] == -1 || (coauthors.find(name) == coauthors.end())) cout << "infinity";
+      else cout << erdos_ns[name];
+      cout << endl;
     }
   }
   return 0;

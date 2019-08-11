@@ -1,5 +1,5 @@
 // Problem ID: 10258
-// By Alexander Cai 20-06-2019
+// By Alexander Cai 2019-06-20
 // Accepted
 
 #include <iostream>

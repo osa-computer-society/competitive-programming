@@ -1,5 +1,5 @@
 // Problem ID: 843
-// By Alexander Cai 19-06-2019
+// By Alexander Cai 2019-06-19
 // Accepted
 
 #include <iostream>
@@ -25,27 +25,6 @@ string word_shape(string word) {
   return ss.str();
 }
 
-#ifdef DEBUG
-void debug_words(const map<string,set<string> > &words) {
-  for (auto kv : words) {
-    cout << kv.first << ": [ ";
-    for (auto w : kv.second)
-      cout << w << ", ";
-    cout << "]" << endl;
-  }
-}
-
-void debug_decrypt(const vector<char> &decrypt) {
-  cout << "[ ";
-  for (int i = 0; i < decrypt.size(); i++) {
-    char n = 'a' + i;
-    if (decrypt[i]) cout << n << decrypt[i] << ", ";
-    else cout << n << "_, ";
-  }
-  cout << "]" << endl;
-}
-#endif
-
 bool run_decrypt(const vector<string> words, int ind, map<string,set<string> > &valid_words, vector<char> &decrypt) {
   if (ind >= words.size()) return true;
 
@@ -54,10 +33,6 @@ bool run_decrypt(const vector<string> words, int ind, map<string,set<string> > &
   string shape = word_shape(word);
 
   if (valid_words.count(shape) <= 0) return false;
-
-  #ifdef DEBUG
-  debug_decrypt(decrypt);
-  #endif
 
   string decoded(len, ENCODED);
   for (int i = 0; i < len; i++)
@@ -112,10 +87,6 @@ int main() {
     words[shape].insert(word);
   }
 
-  #ifdef DEBUG
-  debug_words(words);
-  #endif
-
   // Main loop for each entered sentence
   string sentence;
   while (getline(cin, sentence)) {
@@ -124,12 +95,6 @@ int main() {
 
     while (ss >> word)
       line.push_back(word);
-
-    #ifdef DEBUG
-    cout << "line: [ ";
-    for (auto w : line) cout << w << ", ";
-    cout << "]" << endl;
-    #endif
 
     vector<char> decrypt(26, 0);
     bool decrypted = run_decrypt(line, 0, words, decrypt);

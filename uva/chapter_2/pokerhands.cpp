@@ -1,5 +1,5 @@
 // Problem ID: 10315
-// By Alexander Cai 15-06-2019
+// By Alexander Cai 2019-06-15
 // ACCEPTED! Hoo boy this was a long one -- really it's just accounting
 // for all the different hand combinations and checking for tiebreakers
 // that poses the problem.

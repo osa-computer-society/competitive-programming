@@ -1,5 +1,5 @@
 // Problem ID: 10044
-// By Alexander Cai 19-06-2019
+// By Alexander Cai 2019-06-19
 // Accepted
 // P.S. Don't trust the UVa Online Judge test on uDebug, it's broken -- It said my code was incorrect but the judge still accepted it
 

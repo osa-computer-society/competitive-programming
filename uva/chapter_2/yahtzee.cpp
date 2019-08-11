@@ -1,5 +1,5 @@
 // Problem ID: 10149
-// By Alexander Cai 09-07-2019
+// By Alexander Cai 2019-07-09
 // Accepted
 // With help from https://codingstrife.wordpress.com/2013/07/10/solution-uva10149-pc110208-yahtzee/
 

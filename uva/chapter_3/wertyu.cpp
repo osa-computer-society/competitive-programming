@@ -1,5 +1,6 @@
 // Problem ID: 10082
 // By Alexander Cai
+// Accepted
 
 #include <iostream>
 #include <string>

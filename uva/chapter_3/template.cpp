@@ -1,5 +1,5 @@
 // Problem ID: 
-// By 
+// By <name> <YYYY-MM-DD>
 
 #include <iostream>
 using namespace std;

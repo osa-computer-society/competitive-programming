@@ -8,10 +8,11 @@
 #include <algorithm>
 using namespace std;
 
+map<char,int> common;
+
 int main() {
   string a, b;
   vector<char> both;
-  map<char, int> common;
 
   while (getline(cin, a) && getline(cin, b)) {
     both.clear();
@@ -21,7 +22,10 @@ int main() {
       auto idx = b.find(a[i], common[a[i]]);
       if (idx != string::npos) {
         both.push_back(a[i]);
-        common.insert_or_assign(a[i], idx + 1);
+        if (!common.count(a[i]))
+          common.insert(pair<char,int>(a[i], idx + 1));
+        else
+          common[a[i]] = idx + 1;
       }
     }
 

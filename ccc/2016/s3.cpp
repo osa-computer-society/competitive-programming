@@ -106,7 +106,7 @@ bool *doesSubtreeContainPhoRestaurant;
 void solveAllDoesSubtreeContainPhoRestaurant(int startingNode, int previousNode)
 {
     Node node = nodes[startingNode];
-    if (node.isPhoRestaurant == true)
+    if (node.isPhoRestaurant)
     {
         doesSubtreeContainPhoRestaurant[startingNode] = true;
     }
@@ -116,7 +116,7 @@ void solveAllDoesSubtreeContainPhoRestaurant(int startingNode, int previousNode)
         if (currentNode != previousNode)
         {
             solveAllDoesSubtreeContainPhoRestaurant(currentNode, startingNode);
-            if(doesSubtreeContainPhoRestaurant[currentNode] == true)
+            if(doesSubtreeContainPhoRestaurant[currentNode])
             {
                 doesSubtreeContainPhoRestaurant[startingNode] = true;
             }

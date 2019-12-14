@@ -3,26 +3,20 @@
 # UNFINISHED
 
 import sys
+from collections import defaultdict
 data = sys.stdin.read().split('\n')
-ls = {}
+
+ls = defaultdict(int) # length -> count
 for n in map(int, data[1].split()):
-    if n not in ls:
-        ls[n] = 0
     ls[n] += 1
 
 vals = list(ls.items())
-sums = {}
+sums = defaultdict(int)
 for i in range(len(vals)):
     ln, cnt = vals[i]
-    if cnt > 1:
-        if ln*2 not in sums:
-            sums[ln*2] = 0
-        sums[ln*2] += cnt // 2
-    else:
-        for ln1, cnt1 in vals[i+1:]:
-            if ln+ln1 not in sums:
-                sums[ln+ln1] = 0
-            sums[ln+ln1] += min(cnt, cnt1)
+    sums[ln*2] += cnt // 2
+    for ln1, cnt1 in vals[i+1:]:
+        sums[ln+ln1] += min(cnt, cnt1)
 
 ans, nans = 0, 0
 for ln in sums.values():

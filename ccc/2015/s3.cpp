@@ -1,24 +1,30 @@
+// Solved
+
 #include <iostream>
+#include <set>
 
 using namespace std;
 
 int main()
 {
-    int G, P, k, t, total = 0;
+    int G, P, k;
     cin >> G >> P;
-    int cnt[G+5]; // keeps track of the number of planes at this gate or below
+    
+    set<int> gates;
+    for (int i = 1; i <= G; i++) gates.insert(-i); // negative so that we get greater than or equal to with lower_bound
+    
     for (int i = 0; i < P; i++)
     {
         cin >> k;
-        while (k > 0 and cnt[k] > 0)
+        auto it = gates.lower_bound(-k);
+        if (it == gates.end())
         {
-            t = cnt[k];
-            cnt[k]++;
-            k -= t;
+            cout << i;
+            return 0;
         }
-        if (k <= 0) break;
-        cnt[k] = 1;
-        total++;
+        gates.erase(it);
     }
-    cout << total;
+
+    cout << P;
+    return 0;
 }

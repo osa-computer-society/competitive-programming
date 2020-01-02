@@ -1,3 +1,5 @@
+[![Run on Repl.it](https://repl.it/badge/github/piguyinthesky/competitive-programming)](https://repl.it/github/piguyinthesky/competitive-programming)
+
 # competitive-programming
 Where a couple of friends and I practice for computing competitions. Feel free to open up a pull request if you have solutions to contribute! Always remember to attempt the problem before you look at the solution. Don't copy-paste a solution: even typing it out is better! It'll help you build up the muscle memory.
 
@@ -39,6 +41,7 @@ Where a couple of friends and I practice for computing competitions. Feel free t
 - [University of Valladolid](https://uva.onlinejudge.org/)
   - You can check your answers using [uDebug](https://www.udebug.com/) by selecting UVa from the dropdown list and entering the problem ID
   - From personal experience, make sure to read the output specifications carefully -- it'll save you a lot of time wondering why the judge isn't accepting your answer! Just an extra newline or space can cost you the solution.
+- [DMOJ](https://dmoj.ca/)
   
 ## Misc.
 - Please feel free to contribute to this list!

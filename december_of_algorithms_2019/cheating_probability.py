@@ -1,7 +1,7 @@
-# import sys
-# A = [x.split() for x in sys.stdin.read().split('\n') if x.strip() != '']
+import sys
+A = [x.split() for x in sys.stdin.read().split('\n') if x.strip() != '']
 
-def cheeating_probability(A):
+def cheating_probability(A):
     R = len(A)
     C = len(A[0])
     N = [[.0 for __ in range(C)] for _ in range(R)]
@@ -22,5 +22,7 @@ def cheeating_probability(A):
             br = r < R-1 and c < C-1 and A[r+1][c+1] == val
             for d in (tl, tr, bl, br):
                 if d:
-                    N[r][c] += .1
+                    N[r][c] += .025
     return N
+
+print(cheating_probability(A))

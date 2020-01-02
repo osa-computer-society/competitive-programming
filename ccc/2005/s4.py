@@ -4,17 +4,21 @@ import sys
 input = sys.stdin.readline
 
 l = int(input())
-for i in range(l):
+for _ in range(l):
     n = int(input())
     names = [input() for __ in range(n)]
 
-    ans = -1
+    height = 0
+    max_height = 0
     s = [names[-1]]
-    for j in names:
-        if len(s) > 1 and j == s[-2]:
-            s.pop()
-        else:
-            s.append(j)
-            if len(s) > ans:
-                ans = len(s)
-    print(10 * (n-ans+1) - 20)
+    for name in names:
+        try:
+            i = s.index(name)
+            height = i
+            s = s[:i+1]
+            max_height = max(height, max_height)
+        except ValueError:
+            s.append(name)
+            height = len(s)-1
+            max_height = max(height, max_height)
+    print(n * 10 - 2 * max_height * 10)

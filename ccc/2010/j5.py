@@ -13,7 +13,7 @@ class node:
 
 grid = [[node(x, y) for y in range(1, 9)] for x in range(1, 9)]
 grid[a-1][b-1].d = 0
-# Dijkstra's
+
 Q = [a for lst in grid for a in lst]
 heapq.heapify(Q)
 while len(Q) > 0:

@@ -1,78 +1,43 @@
-// Problem ID: 
+// Problem ID: dmopc14c4p6
 // By Alexander Cai
+// Solved 5 Jan 2020
 
 #include <iostream>
 #include <vector>
-#include <limits>
-#include <queue>
-#define MAXN 500000
+#include <algorithm>
+#define MAXN 500005
 using namespace std;
 
-const int INF = numeric_limits<int>::max();
-
-int down_dp[MAXN];
-int up_dp[MAXN];
-int vis[MAXN];
-int par[MAXN];
 vector<int> adj[MAXN];
+int par[MAXN], d[MAXN], d1[MAXN], d2[MAXN];
 
-int down(int u)
+void dfs(int u, int p, int dist[], int &maxn, int &i)
 {
-    if (down_dp[u] >= 0) return down_dp[u];
-    int max = 0;
-    for (int i : adj[u])
-        if (i != par[u] && down(i) + 1 > max)
-            max = down_dp[i] + 1;
-    return down_dp[u] = max;
-}
-
-int up(int u)
-{
-    if (par[u] < 0) return 0;
-    if (up_dp[u] >= 0) return up_dp[u];
-    int max = up(par[u]) + 1;
-    for (int i : adj[par[u]])
-        if (i != u && i != par[par[u]] && down(i) + 2 > max)
-            max = down_dp[i] + 2;
-    return up_dp[u] = max;
+    par[u] = p;
+    if (dist[u] > maxn) maxn = dist[u], i = u;
+    for (int v : adj[u])
+        if (v != p)
+            dist[v] = dist[u]+1, dfs(v, u, dist, maxn, i);
 }
 
 int main()
 {
     cin.sync_with_stdio(0);
     cin.tie(0);
-
-    int N, a, b;
+    int N, u, v;
     cin >> N;
-
-    for (int i = 0; i < N; i++) down_dp[i] = up_dp[i] = -1;
-
     for (int i = 0; i < N-1; i++)
-    {
-        cin >> a >> b;
-        adj[a-1].push_back(b-1);
-        adj[b-1].push_back(a-1);
-    }
+        cin >> u >> v, adj[u].push_back(v), adj[v].push_back(u);
 
-    queue<int> Q;
-    vis[0] = 1;
-    par[0] = -1;
-    Q.push(0);
-    while (!Q.empty())
-    {
-        int u = Q.front(); Q.pop();
-        for (int i : adj[u])
-        {
-            if (!vis[i])
-            {
-                vis[i] = 1;
-                par[i] = u;
-                Q.push(i);
-            }
-        }
-    }
-
-    for (int i = 0; i < N; i++) cout << max(up(i), down(i)) + 1 << "\n";
+    int a = 0, b = 0, c = 0, i, j, k;
+    d[1] = 0;
+    dfs(1, -1, d, a, i);
+    d1[i] = 0;
+    dfs(i, -1, d1, b, j);
+    d2[j] = 0;
+    dfs(j, -1, d2, c, k);
+    for (int i = 1; i <= N; i++)
+        cout << max(d1[i], d2[i]) + 1 << '\n';
 
     return 0;
 }

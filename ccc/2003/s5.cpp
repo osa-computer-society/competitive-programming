@@ -3,58 +3,53 @@
 
 #include <iostream>
 #include <vector>
-#include <limits>
-#define MAXN 10000
+#include <cstring>
+#define MAXN 20005
+#define INF 0x3f3f3f3f
 using namespace std;
+typedef long long ll;
 typedef pair<int,int> pii;
 
-const int INF = numeric_limits<int>::max();
-
-int adj[MAXN+1][MAXN+1];
+vector<pii> adj[MAXN];
+int dis[MAXN], dest[MAXN];
+bool in_mst[MAXN];
+int N, M, D;
 
 int main()
 {
     cin.sync_with_stdio(0);
     cin.tie(0);
 
-    int N, M, D;
     cin >> N >> M >> D;
 
-    int dests[D];
-    int x, y, w;
+    int a, b, l;
     for (int i = 0; i < M; i++)
     {
-        cin >> x >> y >> w;
-        if (w > adj[x][y]) adj[x][y] = w, adj[y][x] = w;
+        cin >> a >> b >> l;
+        adj[a].push_back({b,l});
+        adj[b].push_back({a,l});
+    }
+    for (int i = 0; i < D; i++) cin >> dest[i];
+
+    memset(dis, -1, sizeof(dis));
+    dis[1] = 0;
+    for (int i = 0; i < N-1; i++)
+    {
+        int far = -1, u = 0;
+        for (int j = 1; j <= N; j++)
+            if (!in_mst[j] && dis[j] > far)
+                far = dis[j], u = j;
+        in_mst[u] = true;
+        for (pii v : adj[u])
+            if (!in_mst[v.first] && v.second > dis[v.first])
+                dis[v.first] = v.second;
     }
 
-    for (int i = 0; i < D; i++) cin >> dests[i];
-
-    int val[N+5];
-    bool vis[N+5];
-    memset(val, 0, sizeof(val));
-    memset(vis, 0, sizeof(vis));
-    val[1] = INF;
-    int mt = 1, largest, u;
-    do
-    {
-        u = mt;
-        vis[u] = 1;
-        largest = 0;
-        mt = -1;
-        for (int v = 1; v <= N; v++)
-        {
-            val[v] = max(val[v], min(val[u], adj[u][v]));
-            if (val[v] >= largest && !vis[v])
-                largest = val[v], mt = v;
-        }
-    } while (mt != -1);
-    
-    int smallest = INF;
-    for (int i = 0; i < D; i++)
-        smallest = min(smallest, val[dests[i]]);
-    
-    cout << smallest << '\n';
+    int ans = INF;
+    for (int d = 0; d < D; d++)
+        if (dis[dest[d]] < ans)
+            ans = dis[dest[d]];
+    cout << ans << '\n';
 
     return 0;
 }

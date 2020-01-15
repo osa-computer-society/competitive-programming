@@ -20,6 +20,7 @@ Where a couple of friends and I practice for computing competitions. Feel free t
 - Use underscores to separate words in function, variable and file names, i.e. `book_genre` or `cpp_primer`.
 - Our suffix for the files is `.cpp`, just to keep things consistent.
 - I'm not too worried about style conventions, as long as it's readable (i.e. proper indentation).
+- To clean up build files, use `find . \( \( -type f -name "*.in" -o -name "*.out" -o -name "*.txt" -o -name "*.csv" \) -o \( -type d -name "*.dSYM" \) \) -exec rm -rf {} \;`
 
 ## Competitions
 
@@ -47,3 +48,4 @@ Where a couple of friends and I practice for computing competitions. Feel free t
 - Please feel free to contribute to this list!
 - [Preparing for the IOI](https://www.quora.com/How-does-one-prepare-for-the-IOI-Aiming-for-gold)
 - [The Coastline data structure](https://www.quora.com/What-is-Coastline-data-structure)
+

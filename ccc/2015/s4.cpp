@@ -1,90 +1,82 @@
 // CCC '15 S4 - Convex Hull
-// By 
+// By Alexander Cai
+// Solved 5 Jan 2020
 
 #include <iostream>
 #include <vector>
 #include <tuple>
 #include <queue>
 #define INF 0x3f3f3f3f
-#define WHITE 0
-#define GRAY 1
-#define BLACK 2
+#define MAXN 2005
+#define MAXK 205
 using namespace std;
 
-// a - distance
-// b - damage
-// c - target
-typedef tuple<int,int,int> edge;
-
-struct node
+struct edge
 {
-  // i - index
-  // p - parent
-  // d - distance
-  // k - remaining health
-  int i, p, d, k;
-  vector<edge> adj;
+  int v, t, h;
+  edge(int v, int t, int h) : v(v), t(t), h(h) {}
 };
 
-// k - thickness of ship's hull
-// n - num vertices
-// m - num edges
-int k, n, m, i, a, b, t, h, A, B, u, v, tt, hh, vv;
-vector<node> V;
+vector<edge> adj[MAXN];
+int dist[MAXN][MAXK];
+bool vis[MAXN][MAXK];
 
 int main()
 {
   cin.sync_with_stdio(0);
   cin.tie(0);
 
-  cin >> k >> n >> m;
+  int K, N, M, a, b, t, h;
+  cin >> K >> N >> M;
 
-  for (i = 0; i < n; ++i)
-  {
-    node u;
-    u.i = i;
-    V.push_back(u);
-  }
-
-  // Read in edges
-  for (i = 0; i < m; ++i)
+  for (int i = 0; i < M; i++)
   {
     cin >> a >> b >> t >> h;
-    V[a].adj.push_back(make_tuple(b, t, h));
-    V[b].adj.push_back(make_tuple(a, t, h));
+    adj[a].push_back(edge(b, t, h));
+    adj[b].push_back(edge(a, t, h));
   }
 
-  // A - start
-  // B - finish
+  int A, B;
   cin >> A >> B;
 
-  // Initialize single source
-  for (node &v : V)
-  {
-    v.d = INF;
-    v.p = -1;
-    v.k = INF;
-  }
-  node &s = V[A];
-  s.d = 0;
-  s.k = k; // starting health
+  for (int i = 1; i <= N; i++)
+    for (int k = 0; k <= K; k++)
+      dist[i][k] = INF;
+  dist[A][K] = 0;
 
-  priority_queue<edge, vector<edge>, greater<edge> > Q;
-  Q.push(make_tuple(0, 0, A));
+  auto compare = [](edge l, edge r)
+  {
+    return l.t > r.t;
+  };
+
+  priority_queue<edge, vector<edge>, decltype(compare)> Q(compare);
+  Q.push(edge(A, 0, K));
+  int min_time = INF;
   while (!Q.empty())
   {
-    tie(t, h, u) = Q.top(); Q.pop();
-    for (edge e : V[u].adj)
+    edge e = Q.top(); Q.pop();
+    if (e.v == B)
     {
-      tie(tt, hh, vv) = e;
-      node &vv
-      if (V[v].d > V[u].d + tt)
+      min_time = e.t;
+      break;
+    }
+    if (vis[e.v][e.h]) continue;
+    vis[e.v][e.h] = 1;
+    for (edge f : adj[e.v])
+    {
+      t = dist[e.v][e.h] + f.t;
+      h = e.h - f.h;
+      if (h > 0)
       {
-
+        if (t < dist[f.v][h])
+          dist[f.v][h] = t;
+        Q.push(edge(f.v, t, h));
       }
     }
   }
 
+  if (min_time == INF) min_time = -1;
+  cout << min_time << '\n';
 
   return 0;
 }

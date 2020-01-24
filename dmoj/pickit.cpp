@@ -2,6 +2,7 @@
 // By 
 
 #include <iostream>
+#include <cstring>
 using namespace std;
 
 int X[205], dp[205][205];
@@ -17,6 +18,8 @@ int main()
         cin >> N;
         if (N == 0) break;
 
+        memset(dp, 0, sizeof(dp));
+
         for (int i = 1; i <= N; i++)
         {
             cin >> X[i];
@@ -30,10 +33,13 @@ int main()
 
         for (int len = 4; len <= N; len++)
         {
-            for (int i = 1; i <= N-len; i++)
+            for (int i = 1; i <= N-len+1; i++)
             {
                 int j = i + len - 1;
-                dp[i][j] = max(dp[i][j-1] + X[i] + X[j-1] + X[j], dp[i+1][j] + X[i] + X[i+1] + X[j]);
+                for (int k = i+1; k <= j-1; k++)
+                {
+                    dp[i][j] = max(dp[i][j], dp[i][k] + dp[k][j] + X[i] + X[k] + X[j]);
+                }
             }
         }
 

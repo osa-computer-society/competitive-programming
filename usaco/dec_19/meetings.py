@@ -6,7 +6,6 @@ def run(data):
             t = -x
         else:
             t = x-L
-        
 
 with open('meetings.in', 'r') as ifile:
     with open('meetings.out', 'w') as ofile:

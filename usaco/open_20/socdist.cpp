@@ -2,20 +2,39 @@
 // By 
 
 #include <iostream>
+#include <fstream>
+#define MAXN 100005
 using namespace std;
+
+long long pos[MAXN], freq[MAXN];
 
 int main()
 {
-    cin.sync_with_stdio(0);
-    cin.tie(0);
+    ifstream fin("socdist.in");
+    ofstream fout("socdist.out");
 
     int N, M;
-    cin >> N >> M;
+    fin >> N >> M;
 
-    for (int i = 1, a, b; i <= M; i++)
+    long long maxb = -1;
+    long long tot = M;
+
+    long long a, b;
+    for (int i = 1; i <= M; i++)
     {
-      cin >> a >> b;
+      fin >> a >> b;
+      pos[a]=i, pos[b+1]=-i, freq[i] = b-a;
+      tot += freq[i];
+      maxb = max(maxb, b);
     }
+    // cout << tot << '\n';
+
+    for (int i = 1; i <= maxb; i++)
+      pos[i] = pos[i-1]+pos[i];
+
+    long long maxd = maxb / (N-1);
+
+    fout << maxd << '\n';
 
     return 0;
 }

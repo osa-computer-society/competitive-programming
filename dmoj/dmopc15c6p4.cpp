@@ -1,5 +1,6 @@
 // Problem ID: 
 // By 
+// Keywords: Kruskal's, Disjoint Set
 
 #include <iostream>
 #include <queue>

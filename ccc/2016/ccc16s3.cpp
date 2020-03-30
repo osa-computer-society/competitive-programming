@@ -1,169 +1,126 @@
-// CCC 2016 Senior 3
-// Solution by Emmanuel Mathi-Amorim
+// Problem ID: Phonomenal Reviews
+// By Alexander au
+// Keywords: Graph Theory, DFS
 
-#include <cstring>
 #include <iostream>
+#include <set>
+#include <queue>
 #include <vector>
- 
+
+#define WHITE 0
+#define GRAY 1
+#define BLACK 2
+#define MAX_N 100005
+
 using namespace std;
- 
-//---------------------------------------------------------------------------
-// Node Graph
-//---------------------------------------------------------------------------
- 
-struct Node
+
+struct node
 {
-    int id;
-    bool isPhoRestaurant;
-    vector<int> connections;
+    int i, color = WHITE, d = MAX_N, p = -1;
+    bool is_pho = false, in_tree = true;
+    vector<int> adj;
 };
- 
-int numberOfRestaurants, numberOfPhoRestaurants;
-vector<int> phoRestaurants;
-vector<Node> nodes;
- 
-void initGraph()
+
+vector<node> V;
+vector<int> V_pho;
+bool subtree_has_pho[MAX_N];
+int max, s, f, total = -2, max_d = 0, furthest_i = -1;
+
+void dfs_visit(int u, int &max_d, int &furthest_i)
 {
-    nodes = vector<Node>();
-    for (int i = 0; i < numberOfRestaurants; i++)
+    // cout << "visiting " << u << ", p: " << V[u].p << ", d: " << V[u].d << "\n";
+    V[u].color = GRAY;
+
+    if (V[u].d > max_d && V[u].is_pho)
     {
-        Node node = Node();
-        node.id = i;
-        node.isPhoRestaurant = false;
-        node.connections = vector<int>();
-        nodes.push_back(node);
+        // cout << "max_d := " << V[u].d << ", furthest_i := " << u << "\n";
+        max_d = V[u].d;
+        furthest_i = u;
     }
-    phoRestaurants = vector<int>();
-}
- 
-void addPhoRestaurant(int pho)
-{
-    phoRestaurants.push_back(pho);
-    nodes[pho].isPhoRestaurant = true;
-}
- 
-void addConnection(int a, int b)
-{
-    nodes[a].connections.push_back(b);
-    nodes[b].connections.push_back(a);
-}
- 
-//---------------------------------------------------------------------------
-// Input
-//---------------------------------------------------------------------------
- 
-void readInput()
-{
-    cin >> numberOfRestaurants >> numberOfPhoRestaurants;
-    initGraph();
-    for (int i = 0; i < numberOfPhoRestaurants; i++)
+    
+    for (int i : V[u].adj)
     {
-        int pho;
-        cin >> pho;
-        addPhoRestaurant(pho);
-    }
-    for (int i = 0; i < (numberOfRestaurants - 1); i++)
-    {
-        int a, b;
-        cin >> a >> b;
-        addConnection(a, b);
-    }
-}
- 
-//---------------------------------------------------------------------------
-// Get Farthest Pho Restaurant
-//---------------------------------------------------------------------------
- 
-void depthFirstSearch(int startingNode, int previousNode, int distanceToStartingNode, int &maxDistanceNode, int &maxDistance)
-{
-    for (int i = 0; i < nodes[startingNode].connections.size(); i++)
-    {
-        int currentNode = nodes[startingNode].connections[i];
-        if (currentNode != previousNode)
+        if (V[i].color == WHITE)
         {
-            int distanceToCurrentNode = distanceToStartingNode + 1;
-            if (distanceToCurrentNode > maxDistance && nodes[currentNode].isPhoRestaurant)
-            {
-                maxDistance = distanceToCurrentNode;
-                maxDistanceNode = currentNode;
-            }
-            depthFirstSearch(currentNode, startingNode, distanceToCurrentNode, maxDistanceNode, maxDistance);
+            V[i].p = V[u].i;
+            V[i].d = V[u].d + 1;
+            dfs_visit(i, max_d, furthest_i);
         }
     }
-}
- 
-void getFarthestPhoRestaurant(int startingNode, int &maxDistanceNode, int &maxDistance)
-{
-    depthFirstSearch(startingNode, startingNode, 0, maxDistanceNode, maxDistance);
-}
- 
-//---------------------------------------------------------------------------
-// Solvers
-//---------------------------------------------------------------------------
- 
-bool *doesSubtreeContainPhoRestaurant;
- 
-void solveAllDoesSubtreeContainPhoRestaurant(int startingNode, int previousNode)
-{
-    Node node = nodes[startingNode];
-    if (node.isPhoRestaurant)
+
+    // cout << "DONE visiting " << u << "\n";
+    V[u].color = BLACK;
+
+    if (V[u].is_pho || subtree_has_pho[u])
     {
-        doesSubtreeContainPhoRestaurant[startingNode] = true;
-    }
-    for (int i = 0; i < node.connections.size(); i++)
-    {
-        int currentNode = node.connections[i];
-        if (currentNode != previousNode)
-        {
-            solveAllDoesSubtreeContainPhoRestaurant(currentNode, startingNode);
-            if(doesSubtreeContainPhoRestaurant[currentNode])
-            {
-                doesSubtreeContainPhoRestaurant[startingNode] = true;
-            }
-        }
+        subtree_has_pho[u] = 1;
+        if (V[u].p >= 0) subtree_has_pho[V[u].p] = 1;
+        total += 2;
+        // cout << "is pho or subtree has pho, TOTAL = " << total << "\n";
     }
 }
- 
-void solveSubtree(int startingNode, int previousNode, int &cost)
+
+void max_d_dfs(int start, int &max_d, int &furthest_i)
 {
-    Node node = nodes[startingNode];
-    for (int i = 0; i < node.connections.size(); i++)
-    {
-        int currentNode = node.connections[i];
-        if (currentNode != previousNode)
-        {
-            if (doesSubtreeContainPhoRestaurant[currentNode])
-            {
-                cost += 2;
-                solveSubtree(currentNode, startingNode, cost);
-            }
-        }
+    // Clear all of the vertices
+    for (node &u : V) {
+        u.d = MAX_N;
+        u.p = -1;
+        u.color = WHITE;
     }
+
+    node &s = V[start];
+    s.color = GRAY;
+    s.d = 0;
+
+    dfs_visit(s.i, max_d, furthest_i);
+
+    // cout << "\n\n\n\n";
 }
- 
-int solveTree(int startingNode)
-{
-    doesSubtreeContainPhoRestaurant = new bool[numberOfRestaurants];
-    memset(doesSubtreeContainPhoRestaurant, false, numberOfRestaurants * sizeof(bool));
-    solveAllDoesSubtreeContainPhoRestaurant(startingNode, startingNode);
-    int cost = 0;
-    solveSubtree(startingNode, startingNode, cost);
-    delete doesSubtreeContainPhoRestaurant;
-    return cost;
-}
- 
-//---------------------------------------------------------------------------
-// Main
-//---------------------------------------------------------------------------
- 
+
 int main()
 {
-    readInput();
-    int maxDistance = 0, optimalStartingNode = 0, optimalEndingNode = 0;
-    getFarthestPhoRestaurant(phoRestaurants[0], optimalStartingNode, maxDistance);
-    int cost = solveTree(optimalStartingNode);
-    getFarthestPhoRestaurant(optimalStartingNode, optimalEndingNode, maxDistance);
-    int finalCost = cost - maxDistance;
-    cout << finalCost;
+    cin.sync_with_stdio(0);
+    cin.tie(0);
+
+    int n, m, i, t, a, b;
+    cin >> n >> m;
+
+    // Initialize array of vertices
+    for (i = 0; i < n; ++i) {
+        node u;
+        u.i = i;
+        V.push_back(u);
+    }
+
+    // Read in pho restaurants
+    for (i = 0; i < m; ++i) {
+        cin >> t;
+        V[t].is_pho = 1;
+        V_pho.push_back(t);
+    }
+
+    // Read in edges as adjacency lists
+    for (i = 0; i < n-1; ++i) {
+        cin >> a >> b;
+        V[a].adj.push_back(b);
+        V[b].adj.push_back(a);
+    }
+    
+    // for (i = 0; i < n; ++i) {
+    //     cout << "adj[" << i << "]: ";
+    //     for (int j : V[i].adj) cout << j << ", ";
+    //     cout << "\n";
+    // }
+
+    max_d_dfs(V_pho[0], max_d, furthest_i);
+    // cout << "furthest_i: " << furthest_i << '\n';
+    max_d = 0;
+    total = -2;
+    max_d_dfs(furthest_i, max_d, furthest_i);
+
+    // cout << "total: " << total << ", max_d: " << max_d << ", furthest_i: " << furthest_i << endl;
+
+    cout << total - max_d << '\n';
     return 0;
 }

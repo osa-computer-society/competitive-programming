@@ -11,8 +11,13 @@ using namespace std;
 int dp[3002][3002];
 int dir[3002][3002];
 
-void lcs(string s, string t, int m, int n)
+int main()
 {
+    string s, t;
+    cin >> s >> t;
+    int m = s.size();
+    int n = t.size();
+    
     for (int i = 0; i <= m; i++)
     {
         for (int j = 0; j <= n; j++)
@@ -30,15 +35,6 @@ void lcs(string s, string t, int m, int n)
             }
         }
     }
-}
-
-int main()
-{
-    string s, t;
-    cin >> s >> t;
-    int m = s.size();
-    int n = t.size();
-    lcs(s, t, m, n);
 
     string ans = "";
     while (m > 0 && n > 0)

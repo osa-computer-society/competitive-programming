@@ -3,57 +3,43 @@
 
 #include <iostream>
 #include <algorithm>
-#include <vector>
-#include <cstring>
-#include <fstream>
 using namespace std;
 
-int B[1005], K;
-vector<int> baskets;
-
-int solve(int i, int rem)
-{
-    if (rem == 0)
-    {
-        sort(baskets.begin(), baskets.end());
-        int total = 0;
-        for (int k = 0; k < K / 2; k++)
-            total += baskets[k];
-        return total;
-    }
-    
-    int ans = -1;
-    
-    for (int j = 1; j <= rem; j++) // j is number of baskets we split this one into
-    {
-        for (int k = 0; k < j; k++)
-            baskets.push_back(B[i] / j);
-        baskets.back() += B[i] % j;
-        
-        ans = max(ans, solve(i-1, rem-j));
-        
-        for (int k = 0; k < j; k++)
-            baskets.pop_back();
-    }
-
-    return ans;
-}
+int B[1005], b = 1;
 
 int main()
 {
-    ifstream fin("berries.in");
-    ofstream fout("berries.out");
+    cin.sync_with_stdio(0);
+    cin.tie(0);
 
-    memset(dp, -1, sizeof(dp));
-
-    int N;
-    fin >> N >> K;
+    int N, K, lgb = -1;
+    cin >> N >> K;
     for (int i = 1; i <= N; i++)
-        fin >> B[i];
+        cin >> B[i], lgb = max(lgb, B[i]);
 
     sort(B+1, B+N+1);
 
-    fout << solve(N, K) << '\n';
+    int ans = -1;
+    for (; b <= lgb; b++)
+    {
+        int tot = 0; // # of baskets
+        for (int i = 1; i <= N; i++)
+            tot += B[i] / b;
+        if (tot < K/2)
+            break;
+        if (tot >= K)
+        {
+            ans = max(ans, b * K/2);
+            continue;
+        }
+        sort(B+1, B+N+1, [](int u, int v){return u%b > v%b;});
+        int bessie = b * (tot-K/2);
+        for (int i = 1; i <= N && tot+i<=K; i++)
+            bessie += B[i]%b;
+        ans = max(ans, bessie);
+    }
+
+    cout << ans << '\n';
 
     return 0;
 }

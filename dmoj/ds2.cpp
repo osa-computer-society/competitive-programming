@@ -1,5 +1,6 @@
 // Problem ID: 
 // By 
+// Keywords: Kruskal's, Graph Theory, Connected Component, Disjoint Set
 
 #include <iostream>
 #include <vector>

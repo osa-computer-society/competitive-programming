@@ -1,6 +1,7 @@
 // Problem ID: rte16s3
 // By Alexander Cai
 // Solved 5 Jan 2020
+// Keywords: Sparse Table, Lowest Common Ancestor, Binary Lifting
 
 #include <iostream>
 #include <vector>

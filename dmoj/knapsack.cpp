@@ -1,5 +1,6 @@
 // Problem ID: 
 // By 
+// Keywords: Dynamic Programming, Bounded Knapsack
 
 #include <iostream>
 #include <cstring>
@@ -8,7 +9,7 @@ using namespace std;
 typedef long long ll;
 
 ll dp[MAXW];
-int cnt[MAXW]; // Limited knapsack: use a counter array
+int cnt[MAXW]; // Bounded knapsack: use a counter array
 
 int main()
 {

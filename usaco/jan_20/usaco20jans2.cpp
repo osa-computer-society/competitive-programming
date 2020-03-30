@@ -2,38 +2,48 @@
 // By 
 
 #include <iostream>
-#include <math.h>
-#include <fstream>
 using namespace std;
 typedef long long ll;
-typedef long double ld;
+
+bool valid(ll N, ll K, ll M, ll X)
+{
+    ll g = 0;
+    while (K > 0 && g < N)
+    {
+        ll y = (N - g) / X;
+        if (y < M)
+        {
+            ll left = (N-g + M-1) / M;
+            return left <= K;
+        }
+        ll max_match = N - X*y;
+        ll ndays = (max_match - g)/y + 1;
+        ndays = min(ndays, K);
+        g += y*ndays;
+        K -= ndays;
+    }
+    return g >= N;
+}
 
 int main()
 {
-    ifstream fin("loan.in");
-    ofstream fout("loan.out");
+    cin.sync_with_stdio(0);
+    cin.tie(0);
 
     ll N, K, M;
-    fin >> N >> K >> M;
+    cin >> N >> K >> M;
 
-    ll X = 1;
-    while (true)
+    ll lo = 1, hi = 1e12;
+
+    while (lo < hi)
     {
-        ld r = (ld)(X-1)/X;
-        // cout << "r: " << r << ", X: " << X << ", M: " << M << ", N: " << N << '\n';
-        ll cnt = ceil(log2((ld)X*M/N) / log2(r));
-        // cout << (ld)N / X << '\n';
-        ll sum = (ld)(N/X) * (1.0-pow(r, cnt)) / (1.0-r);
-        cnt += ceil((N-sum)/M);
-        if (cnt > K)
-        {
-            fout << X << '\n';
-            return 0;
-        }
-        cout << cnt << '\n';
-        break;
-        X++;
+        ll mid = (lo+hi+1)/2;
+
+        if (valid(N, K, M, mid)) lo = mid;
+        else hi = mid-1;
     }
+
+    cout << lo << '\n';
 
     return 0;
 }

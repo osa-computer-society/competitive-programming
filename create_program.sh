@@ -1,6 +1,6 @@
 #!/bin/bash
 
-template="/Users/alexandercai/Programming/competitive-programming/template.cpp"
+template="/Users/alexandercai/GitHub/competitive-programming/template.cpp"
 
 createFile() {
     cd "$1"

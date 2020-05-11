@@ -1,40 +1,61 @@
-// Problem ID: 
-// By 
-
+#include <utility>
+#include <vector>
 #include <iostream>
-#include <fstream>
-#define MAXN 100005
+#include <algorithm>
+#define INF 0x3f3f3f3f
 using namespace std;
-
-long long pos[MAXN], freq[MAXN];
-
+typedef long long ll;
+typedef pair<ll,ll> pll;
+ 
+int N, M;
+ 
+vector<pll> intervals;
+ 
+bool works(ll d)
+{
+    ll prev = -INF;
+    
+    int cnt = 0;
+    for (pll i : intervals)
+    {
+        while (max(prev + d, i.first) <= i.second)
+        {
+            prev = max(prev + d, i.first);
+            cnt++;
+            if (cnt >= N) break;
+        }
+        if (cnt >= N) break;
+    }
+ 
+    return cnt >= N;
+}
+ 
 int main()
 {
-    ifstream fin("socdist.in");
-    ofstream fout("socdist.out");
+    cin >> N >> M;
 
-    int N, M;
-    fin >> N >> M;
+    intervals.resize(M);
 
-    long long maxb = -1;
-    long long tot = M;
-
-    long long a, b;
-    for (int i = 1; i <= M; i++)
+    for (int i = 0; i < M; ++i) 
+        cin >> intervals[i].first >> intervals[i].second;
+ 
+    sort(intervals.begin(), intervals.end());
+ 
+    ll lo = 1;
+    ll hi = INF;
+    ll ans = -1;
+ 
+    while (lo <= hi)
     {
-      fin >> a >> b;
-      pos[a]=i, pos[b+1]=-i, freq[i] = b-a;
-      tot += freq[i];
-      maxb = max(maxb, b);
+        ll mid = (lo + hi) / 2;
+        if (works(mid))
+        {
+            ans = mid;
+            lo = mid + 1;
+        }
+        else
+            hi = mid - 1;
     }
-    // cout << tot << '\n';
-
-    for (int i = 1; i <= maxb; i++)
-      pos[i] = pos[i-1]+pos[i];
-
-    long long maxd = maxb / (N-1);
-
-    fout << maxd << '\n';
-
-    return 0;
+ 
+    cout << ans << '\n';
 }

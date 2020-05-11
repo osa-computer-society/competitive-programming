@@ -1,13 +1,15 @@
 // Problem ID: 
 // By 
+// UNSOLVED
 
 #include <iostream>
+#include <cstring>
 #define MAXW 5005
-#define PREV i%2
-#define CURR (i-1)%2
+#define INF 0x3f3f3f3f
 using namespace std;
 typedef long long ll;
 ll dp[2][MAXW];
+bool used[MAXW];
 
 int main()
 {
@@ -16,17 +18,27 @@ int main()
 
     int N, W;
     cin >> N >> W;
+
     for (int i = 1, v1, w1, v2, w2; i <= N; i++)
     {
+        int curr = i%2, prev = (i+1)%2;
         cin >> v1 >> w1 >> v2 >> w2;
-        for (ll v = v1, w = w1; w <= W; v += v2, w += w2)
-            for (int j = W; j >= w; j--)
-                dp[1][j] = max(dp[PREV][j], max(dp[CURR][j], dp[PREV][j-w]+v));
-        for (int j = 1; j <= W; j++)
-            dp[PREV][j] = dp[CURR][j];
+        memset(used, 0, sizeof(used));
+
+        for (int j = w1; j <= W; j++)
+            dp[curr][j] = dp[prev][j-w1]+v1, used[j] = 1;
+        
+        for (int j = w1+w2; j <= W; j++)
+            if (used[j-w2])
+                dp[curr][j] = max(dp[curr][j], dp[curr][j-w2]+v2);
+        
+        for (int j = 0; j <= W; j++) dp[curr][j] = max(dp[curr][j], dp[curr][j]);
     }
 
-    cout << dp[N%2][W] << '\n';
+    ll ans = 0;
+    for (int i = 0; i <= W; i++)
+        ans = max(ans, dp[N%2][i]);
+    cout << ans << "\n";
 
     return 0;
 }

@@ -4,6 +4,8 @@ TASK: milk2
 LANG: C++14
 */
 
+// solved 2020-07-19
+
 #include <iostream>
 #include <fstream>
 #include <queue>
@@ -19,40 +21,31 @@ int main()
     int N;
     fin >> N;
 
-    priority_queue<pii, vector<pii>, greater<pii>> pq;
+    priority_queue<pii, vector<pii>, greater<pii> > pq;
     for (int i = 0, a, b; i < N; i++)
     {
         fin >> a >> b;
-        pq.push({a,1});
-        pq.push({b,-1});
+        pq.push(make_pair(a, b));
     }
 
-    int stack = 0, idle = 0, cont = 0, prev = pq.top().first;
+    pii prev = pq.top(); pq.pop();
+    int idle = 0, cont = prev.second - prev.first;
     while (!pq.empty())
     {
-        int n = pq.top().first; int t = pq.top().second; pq.pop();
-        cout << n << ' ' << t << '\n';
-        if (!pq.empty() && n == pq.top().first)
+        pii curr = pq.top(); pq.pop();
+        cout << curr.first << ' ' << curr.second << '\n';
+        if (curr.first > prev.second) // begins after the prev ends => idle
         {
-            if (t == pq.top().second)
-                stack += t == 1 ? 1 : -1;
-            pq.pop();
-            continue;
-        }
-        if (t == 1)
-        {
-            if (stack == 0)
-                idle = max(idle, n - prev), prev = n;
-            stack++;
+            idle = max(idle, curr.first - prev.second);
+            cont = max(cont, curr.second - curr.first);
+            prev = curr;
         }
         else
         {
-            stack--;
-            if (stack == 0)
-                cont = max(cont, n-prev), prev = n;
+            cont = max(cont, curr.second - prev.first);
+            prev.second = max(prev.second, curr.second);
         }
     }
-
     fout << cont << ' ' << idle << '\n';
     
     fin.close();

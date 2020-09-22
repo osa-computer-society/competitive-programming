@@ -11,4 +11,5 @@ new:
 	code -r "$(NAME).cpp" "$(NAME).in"
 
 clean:
-	find . \( -type d -name "*.dSYM" \) -o -type f \( -name "*.in" -o -name "*.out" -o -perm 755 \) -exec rm -rf {} \;
+	find . -type f \( -name "*.in" -o -name "*.out" -o -perm 755 \) -delete;
+	find . -type d -name "*.dSYM" -exec rm -rf {} \;

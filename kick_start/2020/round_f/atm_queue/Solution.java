@@ -1,3 +1,6 @@
+// Translation of the cpp solution by Alexander Cai
+// Solved
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Arrays;

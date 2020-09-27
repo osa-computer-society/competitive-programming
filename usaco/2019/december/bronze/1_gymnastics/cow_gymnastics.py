@@ -1,3 +1,5 @@
+# Code by Alexander Cai
+
 # Solved
 
 with open('gymnastics.in', 'r') as file:

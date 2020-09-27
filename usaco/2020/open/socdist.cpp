@@ -29,7 +29,7 @@ bool works(ll d)
  
     return cnt >= N;
 }
- 
+
 int main()
 {
     cin >> N >> M;

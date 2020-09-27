@@ -1,5 +1,4 @@
-// Problem ID: 
-// By 
+// An implementation of Kruskal's algorithm
 
 #include <iostream>
 #include <queue>
@@ -13,7 +12,10 @@ struct edge
     edge(int u, int v, int l): u(u), v(v), l(l) {}
 };
 
-int par[MAXN], r[MAXN];
+// par[i] is the set representative of vertex i
+int par[MAXN];
+// r[i] is the rank of vertex i, used to optimize connecting components in the `link` function
+int r[MAXN];
 
 int find_set(int u)
 {
@@ -54,6 +56,7 @@ int main()
     }
 
     int n_edges = 0;
+    // the minimum spanning tree to hold our edges
     vector<edge> mst;
     while (n_edges < N-1)
     {

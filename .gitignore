@@ -28,7 +28,6 @@
 
 # Executables
 *.exe
-*.out
 *.app
 
 # VS Code
@@ -40,3 +39,6 @@
 
 # Testing
 *.test
+
+# Python
+__pycache__

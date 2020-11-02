@@ -32,6 +32,8 @@ def main():
     solution_path = input(
         'please enter the relative path to your solution, including the extension: ')
 
+    assert os.path.isfile(solution_path), 'please enter a valid path'
+
     if solution_path.endswith('.cpp'):
         os.mkdir('tmp')
         os.chdir('tmp')
@@ -57,6 +59,8 @@ def main():
 
         os.chdir('..')
         safecall(['rm', '-rf', './tmp'])
+
+    # room for other extensions
 
 
 if __name__ == '__main__':

@@ -39,4 +39,4 @@
 *.dSYM
 
 # Testing
-*.in
+*.test

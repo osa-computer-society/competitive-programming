@@ -12,24 +12,27 @@
 using namespace std;
 
 // Allows the printing of pairs for maps
-template<typename K, typename V>
-ostream &operator<<(ostream &os, const pair<K, V> &p) {
+template <typename K, typename V>
+ostream &operator<<(ostream &os, const pair<K, V> &p)
+{
   os << p.first << " => " << p.second;
   return os;
 }
 
 // Print out a vector, map, set, or any other collection
-template<typename Collection>
-void log(string s, const Collection &c) {
-  #ifdef DEBUG
+template <typename Collection>
+void log(string s, const Collection &c)
+{
+#ifdef DEBUG
   cout << s << ": [\n";
   for (typename Collection::const_iterator it = c.begin(); it != c.end(); it++)
     cout << "  " << *it << ",\n";
   cout << ']' << endl;
-  #endif
+#endif
 }
 
-int main() {
+int main()
+{
   vector<int> arr{3, 1, 4, 1, 5, 9};
   map<int, int> m; // {{1, 2}, {3, 4}};
   m[1] = 2;

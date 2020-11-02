@@ -1,27 +1,30 @@
-[![Run on Repl.it](https://repl.it/badge/github/piguyinthesky/competitive-programming)](https://repl.it/github/piguyinthesky/competitive-programming)
-
 # competitive-programming
 
-Here's a small informal repo where a couple of friends and I practice for computing competitions. Feel free to open up a pull request if you have solutions to contribute! Always remember to attempt the problem before you look at the solution. Don't copy-paste a solution: even typing it out is better! It'll help you build up the muscle memory.
+This repository is aimed at introducing new programmers, and more specifically, Canadian high school students, to the world of competitive programming. This is maintained by the executives of the OSA Computer Society, and as such it will be opinionated, since it is much more efficient to learn one way well than to spend many hours deciding which way to learn.
 
-# Resources
+**Always attempt the problem before you look at the solution!** Also, **NEVER** copy and paste: even typing out the solution by hand is better, since it'll help you build up the muscle memory.
 
-## Language of choice: C++
+There are no shortcuts; only hard work and dedication. Be patient and set realistic goals.
 
-- [C++ tutorial](http://www.cplusplus.com/doc/tutorial/)
-- Most of our code is written using C++. To run a C++ file (.cpp) from the Mac/Linux terminal:
-  1. `cd` to the directory containing the file you want to run.
-  2. Type `g++ [filename]`. This should create a file named `a.out` in the same directory.
-  3. To run the file, type `./a.out` in your terminal and press enter.
-  4. The program should run.
-- You can test this using the `hello_world.cpp` file.
-- Some subdirectories also have Makefiles you can use if you're familiar with them.
-- An interesting way to learn a new language is translating an existing solution. Keep in mind that this might not always be directly possible!
+If you would like to contribute a solution, please feel free to open a pull request following the guidelines below!
 
-### Conventions
+## Contributing
 
-- Use the standard namespace, i.e. put `using namespace std;` at the top of your C++ files.
-- Use underscores to separate words in function, variable and file names, i.e. `book_genre` or `cpp_primer`.
-- Our suffix for the files is `.cpp`, just to keep things consistent.
-- I'm not too worried about style conventions, as long as it's readable.
-- To clean up build files, run `./cleanup.sh`. Make sure it's marked as an executable by running `chmod +x cleanup.sh`.
+- Style is not the most important attribute as long as your code is readable. [The Zen of Python](https://zen-of-python.info/) is good advice no matter what language you're writing in.
+- Document any non-trivial parts of your code, including algorithms you use.
+- Please place your code in the folder for the contest where it was originally written.
+- Use underscores in file names.
+- Remove any confidential information, such as your username/id in a header comment.
+- Use the file extension `.cpp` for C++ files and not `.cc`.
+
+## Resources
+
+Resources are currently scattered throughout the directory as well as on [our website](https://alexandercai.gitbook.io/osacs/).
+
+We do assume that you have some basic experience with the programming language you aim to use, such as:
+
+- Loops (for, while)
+- Conditionals (if, else)
+- Basic data structures (arrays)
+
+If you're *entirely new*, we recommend learning either Python or C++. The former is easier to learn for most people, while the latter is very fast and allows you more precision over low-level details.

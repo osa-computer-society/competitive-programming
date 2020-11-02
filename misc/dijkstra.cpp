@@ -11,10 +11,12 @@ using namespace std;
 typedef pair<int, int> pii;
 
 int dist[MAXV], N;
+
 // We use a min-priority queue of integer pairs,
 // where the first term is the distance from the starting vertex
 // and the second term is the index of the vertex
 priority_queue<pii, vector<pii>, greater<pii> > pq;
+
 // The graph, stored as adjacency lists
 vector<pii> adj[MAXV];
 

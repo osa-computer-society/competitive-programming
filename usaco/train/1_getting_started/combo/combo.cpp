@@ -1,9 +1,3 @@
-/*
-ID: a.cai61
-TASK: combo
-LANG: C++14
-*/
-
 // Solved 2020-07-24
 
 #include <iostream>

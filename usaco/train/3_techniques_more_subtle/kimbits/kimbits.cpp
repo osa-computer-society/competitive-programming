@@ -1,9 +1,3 @@
-/*
-ID: a.cai61
-TASK: kimbits
-LANG: C++14
-*/
-
 // solved
 
 // dynamic programming, recursion

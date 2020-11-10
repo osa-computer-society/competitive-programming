@@ -1,9 +1,3 @@
-/*
-ID: a.cai61
-TASK: contact
-LANG: C++14
-*/
-
 // solved 2020-09-20
 
 // sliding window

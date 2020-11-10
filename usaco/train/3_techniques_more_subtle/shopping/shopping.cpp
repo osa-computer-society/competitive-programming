@@ -1,9 +1,3 @@
-/*
-ID: YOUR_ID_HERE
-TASK: shopping
-LANG: C++14
-*/
-
 // solved
 
 // dynamic programming

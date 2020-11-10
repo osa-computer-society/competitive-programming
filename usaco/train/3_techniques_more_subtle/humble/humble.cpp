@@ -1,9 +1,3 @@
-/*
-ID: a.cai61
-TASK: humble
-LANG: C++14
-*/
-
 // solved 2020-09-16
 
 #include <iostream>

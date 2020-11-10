@@ -1,9 +1,3 @@
-/*
-ID: a.cai61
-TASK: lamps
-LANG: C++14
-*/
-
 // Solved 2020-08-19
 
 #include <iostream>

@@ -1,9 +1,3 @@
-/*
-ID: a.cai61
-TASK: wormhole
-LANG: C++14
-*/
-
 // solved 2020-07-24
 
 #include <iostream>

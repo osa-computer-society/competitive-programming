@@ -1,9 +1,3 @@
-/*
-ID: a.cai61
-TASK: butter
-LANG: C++14
-*/
-
 // solved 2020-09-22
 
 // holy COW that took way too long

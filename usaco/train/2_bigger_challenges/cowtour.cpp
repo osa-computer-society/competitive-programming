@@ -1,9 +1,3 @@
-/*
-ID: a.cai61
-TASK: cowtour
-LANG: C++14
-*/
-
 // solved 2020-08-28
 
 // graph traversal, connected components, embedded graph

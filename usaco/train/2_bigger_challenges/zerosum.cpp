@@ -1,9 +1,3 @@
-/*
-ID: a.cai61
-TASK: zerosum
-LANG: C++14
-*/
-
 // solved
 
 // simple backtracking, recursion

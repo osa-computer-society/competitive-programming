@@ -1,9 +1,3 @@
-/*
-ID: a.cai61
-TASK: numtri
-LANG: C++14
-*/
-
 // solved 2020-06-31
 
 #include <iostream>

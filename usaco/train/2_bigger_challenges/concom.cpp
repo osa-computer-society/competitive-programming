@@ -1,9 +1,3 @@
-/*
-ID: a.cai61
-TASK: concom
-LANG: C++14
-*/
-
 // solved
 
 // tricky recursion

@@ -1,9 +1,3 @@
-/*
-ID: a.cai61
-TASK: frac1
-LANG: C++14
-*/
-
 // Solved 2020-08-06
 
 #include <iostream>

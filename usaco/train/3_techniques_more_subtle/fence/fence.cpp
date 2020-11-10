@@ -1,9 +1,3 @@
-/*
-ID: a.cai61
-TASK: fence
-LANG: C++14
-*/
-
 // solved 2020-09-22
 
 // make sure to remember multiple paths between vertices: used adj matrix for this

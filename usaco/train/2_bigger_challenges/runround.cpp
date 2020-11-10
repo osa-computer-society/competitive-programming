@@ -1,9 +1,3 @@
-/*
-ID: a.cai61
-TASK: runround
-LANG: C++14
-*/
-
 // Solved 2020-08-18
 
 #include <iostream>

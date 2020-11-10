@@ -1,9 +1,3 @@
-/*
-ID: a.cai61
-TASK: fracdec
-LANG: C++14
-*/
-
 // solved
 
 // math, arithmetic

@@ -1,9 +1,3 @@
-/*
-ID: a.cai61
-TASK: milk
-LANG: C++14
-*/
-
 #include <iostream>
 #include <algorithm>
 #include <fstream>

@@ -1,9 +1,3 @@
-/*
-ID: a.cai61
-TASK: pprime
-LANG: C++14
-*/
-
 // solved 2020-06-31
 // took a while - originally I used Eratosthene's Sieve to track primes,
 // but the memory storage was too large

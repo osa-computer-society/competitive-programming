@@ -1,9 +1,3 @@
-/*
-ID: a.cai61
-TASK: beads
-LANG: C++14
-*/
-
 #include <iostream>
 #include <fstream>
 #include <string>

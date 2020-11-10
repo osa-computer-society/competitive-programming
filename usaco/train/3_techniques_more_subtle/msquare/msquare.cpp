@@ -1,9 +1,3 @@
-/*
-ID: a.cai61
-TASK: msquare
-LANG: C++14
-*/
-
 // solved 2020-09-21
 
 // man, I found this one really hard, spent like 2 hours on it

@@ -1,9 +1,3 @@
-/*
-ID: a.cai61
-TASK: ttwo
-LANG: C++14
-*/
-
 // solved 2020-08-26
 
 // simulation

@@ -1,9 +1,3 @@
-/*
-ID: a.cai61
-TASK: friday
-LANG: C++14
-*/
-
 #include <iostream>
 #include <fstream>
 using namespace std;

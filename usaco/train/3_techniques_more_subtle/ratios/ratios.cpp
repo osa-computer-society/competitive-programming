@@ -1,9 +1,3 @@
-/*
-ID: a.cai61
-TASK: ratios
-LANG: C++14
-*/
-
 // solved 2020-09-21
 
 // brute force, implementation

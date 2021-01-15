@@ -7,7 +7,3 @@ void selection_sort(int s[], int len) {
     }
   }
 }
-
-int main() {
-
-}

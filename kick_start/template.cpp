@@ -11,4 +11,6 @@ int main()
         cout << "Case #" << t << ": ";
         cout << '\n';
     }
+    
+    return 0;
 }

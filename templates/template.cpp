@@ -14,7 +14,7 @@ int main()
 
     for (int i = 1; i <= N; ++i)
     {
-        
+        // run code
     }
 
     return 0;

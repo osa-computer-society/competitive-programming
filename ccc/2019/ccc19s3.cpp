@@ -1,78 +1,138 @@
-// Problem ID: 
-// By 
+
 
 #include <iostream>
+#include <utility>
 #include <string>
 using namespace std;
+typedef pair<int, int> pii;
 
-int grid[5][5];
-bool x[5][5];
+int a[4][4];
+bool v[4][4];
+int row[4], col[4];
+int cnt = 0;
+pii order[] = {
+    {2, 2},
+    {2, 1},
+    {2, 3},
+    {1, 2},
+    {3, 2},
+};
 
-bool complete()
-{
-    for (int i = 0; i < 3; i++)
-        for (int j = 0; j < 3; j++)
-            if (x[i][j])
-                return 0;
-    return true;
-}
+void fillCell(int, int);
+void fillR(int);
+void fillC(int);
 
 int main()
 {
-    cin.sync_with_stdio(0);
-    cin.tie(0);
-
     string s;
-    for (int i = 0; i < 3; i++)
+    for (int i = 1; i <= 3; i++)
     {
-        for (int j = 0; j < 3; j++)
+        for (int j = 1; j <= 3; j++)
         {
             cin >> s;
-            if (s == "X") x[i][j] = 1;
-            else grid[i][j] = stoi(s);
-        }
-    }
-
-    while (!complete())
-    {
-        bool changed = 0;
-        for (int i = 0; i < 3; i++)
-        {
-            if (x[i][0] && !x[i][1] && !x[i][2])
-                grid[i][0] = 2*grid[i][1] - grid[i][2], x[i][0] = 0, changed = true;
-            if (x[i][1] && !x[i][0] && !x[i][2])
-                grid[i][1] = (grid[i][0] + grid[i][2])/2, x[i][1] = 0, changed = true;
-            if (x[i][2] && !x[i][0] && !x[i][1])
-                grid[i][2] = 2*grid[i][1] - grid[i][0], x[i][2] = 0, changed = true;
-            
-            if (x[0][i] && !x[1][i] && !x[2][i])
-                grid[0][i] = 2*grid[1][i] - grid[2][i], x[0][i] = 0, changed = true;
-            if (x[1][i] && !x[0][i] && !x[2][i])
-                grid[1][i] = (grid[0][i] + grid[2][i])/2, x[1][i] = 0, changed = true;
-            if (x[2][i] && !x[0][i] && !x[1][i])
-                grid[2][i] = 2*grid[1][i] - grid[0][i], x[2][i] = 0, changed = true;
-        }
-        if (changed) continue;
-        if (x[1][1])
-        {
-            grid[1][1] = 0, x[1][1] = 0;
-            continue;
-        }
-        for (int j = 0; j <= 2; j += 2)
-        {
-            if (!x[j][j])
+            if (s == "X")
             {
-                if (x[j][1]) grid[j][1] = 0, x[j][1] = 0, changed = 1;
-                if (x[1][j]) grid[1][j] = 0, x[1][j] = 0, changed = 1;
-                if (changed) break;
+                v[i][j] = true;
+                row[i]++;
+                col[j]++;
+                cnt++;
             }
+            else
+                a[i][j] = stoi(s);
         }
-        if (changed) continue;
     }
 
-    for (int i = 0; i < 3; i++)
-        cout << grid[i][0] << ' ' << grid[i][1] << ' ' << grid[i][2] << '\n';
+    while (cnt > 0)
+    {
+        bool cont = false;
+        for (int i = 1; i <= 3; i++)
+            if (row[i] == 1)
+                fillR(i), cont = true;
+        if (cont)
+            continue;
+        for (int i = 1; i <= 3; i++)
+            if (col[i] == 1)
+                fillC(i), cont = true;
+        if (cont)
+            continue;
+        for (pii e : order)
+            if (v[e.first][e.second])
+            {
+                fillCell(e.first, e.second), cont = true;
+                break;
+            }
+        if (cont)
+            continue;
 
+        for (int i = 1; i <= 3; i++)
+            for (int j = 1; j <= 3; j++)
+                if (v[i][j])
+                    fillCell(i, j), i = 4, j = 4;
+    }
+
+    for (int i = 1; i <= 3; i++)
+    {
+        for (int j = 1; j <= 3; j++)
+            cout << a[i][j] << " ";
+        cout << "\n";
+    }
 
     return 0;
+}
+
+void fillCell(int r, int c)
+{
+    row[r]--;
+    col[c]--;
+    cnt--;
+    v[r][c] = false;
+    a[r][c] = 0;
+}
+
+void fillR(int r)
+{
+    if (v[r][1])
+    {
+        a[r][1] = 2 * a[r][2] - a[r][3];
+        col[1]--;
+        v[r][1] = false;
+    }
+    if (v[r][3])
+    {
+        a[r][3] = 2 * a[r][2] - a[r][1];
+        col[3]--;
+        v[r][3] = false;
+    }
+    if (v[r][2])
+    {
+        a[r][2] = (a[r][1] + a[r][3]) / 2;
+        col[2]--;
+        v[r][2] = false;
+    }
+    row[r]--;
+    cnt--;
+}
+
+void fillC(int c)
+{
+    if (v[1][c])
+    {
+        a[1][c] = 2 * a[2][c] - a[3][c];
+        row[1]--;
+        v[1][c] = false;
+    }
+    if (v[3][c])
+    {
+        a[3][c] = 2 * a[2][c] - a[1][c];
+        row[3]--;
+        v[3][c] = false;
+    }
+    if (v[2][c])
+    {
+        a[2][c] = (a[1][c] + a[3][c]) / 2;
+        row[2]--;
+        v[2][c] = false;
+    }
+    col[c]--;
+    cnt--;
 }

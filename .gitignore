@@ -29,9 +29,10 @@
 # Executables
 *.exe
 *.app
+a.out
 
 # VS Code
-.vscode
+.vscode/
 
 # Mac files
 .DS_Store

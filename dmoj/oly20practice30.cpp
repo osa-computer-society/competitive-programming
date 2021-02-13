@@ -1,5 +1,7 @@
 // Problem ID: oly20practice30.cpp
-// By 
+// By Alexander Cai
+
+// interval dp
 
 #include <iostream>
 #include <string>

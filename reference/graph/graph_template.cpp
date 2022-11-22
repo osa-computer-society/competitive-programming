@@ -1,5 +1,5 @@
-// Problem ID: 
-// By 
+// Problem ID:
+// By
 
 #include <iostream>
 #include <vector>
@@ -8,7 +8,7 @@
 #define INF 0x3f3f3f3f
 using namespace std;
 typedef long long ll;
-typedef pair<int,int> pii;
+typedef pair<int, int> pii;
 
 vector<pii> adj[MAXN];
 int dis[MAXN];
@@ -23,7 +23,8 @@ void dijkstra(int s)
     Q.push(s);
     while (!Q.empty())
     {
-        int u = Q.top(); Q.pop();
+        int u = Q.top();
+        Q.pop();
         for (pii e : adj[u])
             if (dis[u] + e.second < dis[e.first])
                 dis[e.first] = dis[u] + e.second, Q.push(e.first);
@@ -41,8 +42,8 @@ int main()
     for (int i = 0; i < M; i++)
     {
         cin >> a >> b >> l;
-        adj[a].push_back({b,l});
-        adj[b].push_back({a,l});
+        adj[a].push_back({b, l});
+        adj[b].push_back({a, l});
     }
 
     return 0;

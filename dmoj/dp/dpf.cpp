@@ -1,52 +1,63 @@
-// Probdpem ID:
-// By
+// By Alexander Cai 2021-02-14
+
 #include <iostream>
 #include <string>
-#include <cstring>
-#define L 0
-#define U 1
-#define D 2
+#define FOR(i, a, b) for (int i = (a); i <= (b); ++i)
 using namespace std;
+typedef long long ll;
 
-int dp[3002][3002];
-int dir[3002][3002];
+const int maxn = 3005;
+
+// dp[i][j] = length of longest subsequence from s[1..i] and t[1..j]
+int dp[maxn][maxn];
+string s, t;
+
+void backtrack(int, int);
 
 int main()
 {
-    string s, t;
+    cin.sync_with_stdio(0);
+    cin.tie(0);
+
     cin >> s >> t;
-    int m = s.size();
-    int n = t.size();
-    
-    for (int i = 0; i <= m; i++)
+    int N = s.size(), M = t.size();
+
+    FOR(i, 1, N)
     {
-        for (int j = 0; j <= n; j++)
+        FOR(j, 1, M)
         {
-            if (i == 0 || j == 0)
-                dp[i][j] = 0;
-            else if (s[i - 1] == t[j - 1])
-                dp[i][j] = dp[i-1][j-1] + 1, dir[i][j] = D;
+            // if the ith char of s and the jth char of t match,
+            // the length of LCS of s[1..i] and t[1..j]
+            // is 1 more than the length of LCS of s[1..i-1] and t[1..j-1]
+            if (s[i - 1] == t[j - 1])
+                dp[i][j] = dp[i - 1][j - 1] + 1;
+            // if they don't match, then the length of LCS of s[1..i] and t[1..j]
+            // is whichever is greater:
+            // len of LCS of s[1..i] and t[1..j-1] or s[1..i-1] and t[1..j]
             else
-            {
-                if (dp[i-1][j] > dp[i][j-1])
-                    dp[i][j] = dp[i-1][j], dir[i][j] = L;
-                else
-                    dp[i][j] = dp[i][j-1], dir[i][j] = U;
-            }
+                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
         }
     }
 
-    string ans = "";
-    while (m > 0 && n > 0)
-    {
-        if (dir[m][n] == D)
-        {
-            ans = s[m-1] + ans;
-            m--, n--;
-        }
-        else if (dir[m][n] == L) m--;
-        else if (dir[m][n] == U) n--;
-    }
-    cout << ans << '\n';
+    backtrack(N, M); // prints the characters while recursing
+    cout << '\n';
+
     return 0;
+}
+
+void backtrack(int i, int j)
+{
+    if (i > 0 && j > 0)
+    {
+        // we print a character if they match at that point
+        if (s[i - 1] == t[j - 1])
+        {
+            backtrack(i - 1, j - 1);
+            cout << s[i - 1];
+        }
+        else if (dp[i][j] == dp[i][j - 1])
+            backtrack(i, j - 1); // decrement slice of t
+        else
+            backtrack(i - 1, j); // decrement slice of s
+    }
 }

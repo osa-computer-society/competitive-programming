@@ -2,7 +2,9 @@
 // By Alexander Cai
 
 #include <iostream>
+#define FOR(i, a, b) for (int i = (a); i <= (b); ++i)
 using namespace std;
+typedef long long ll;
 
 int main()
 {
@@ -12,7 +14,7 @@ int main()
     int N;
     cin >> N;
 
-    for (int i = 1; i <= N; ++i)
+    FOR(i, 1, N)
     {
         // run code
     }
